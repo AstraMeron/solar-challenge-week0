@@ -17,17 +17,25 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          # Change 1: Set a specific, newer Python version (e.g., 3.11) 
+          # to help find pre-built wheels and avoid compilation.
+          python-version: '3.11' 
 
-      # --- FIX STARTS HERE ---
       - name: Install PyArrow Build Dependencies 🛠️
-        # pyarrow often requires these system libraries and build tools to compile successfully
         run: |
           sudo apt-get update
-          # install build-essential (for C/C++ compiler), cmake, and libarrow-dev (optional but helpful)
-          sudo apt-get install -y build-essential cmake pkg-config
-      # --- FIX ENDS HERE ---
-
+          # Change 2: Use the comprehensive list of system dependencies
+          # required for successful pyarrow compilation if a wheel is not found.
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            pkg-config \
+            libboost-dev \
+            libgflags-dev \
+            libprotobuf-dev \
+            libarrow-dev \
+            libparquet-dev
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
