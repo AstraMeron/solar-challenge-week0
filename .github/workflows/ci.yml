@@ -14,25 +14,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          # Change 1: Set a specific, newer Python version (e.g., 3.11) 
-          # to help find pre-built wheels and avoid compilation.
+          # Fix 1: Using a specific, modern version to find pre-built wheels
           python-version: '3.11' 
 
-      - name: Install PyArrow Build Dependencies 🛠️
+      - name: Install PyArrow System Dependencies 🛠️
+        # Fixes 2 & 3: Adds the Arrow repository and installs necessary libraries
         run: |
           sudo apt-get update
-          # Change 2: Use the comprehensive list of system dependencies
-          # required for successful pyarrow compilation if a wheel is not found.
+          
+          # Install basic tools and repository setup utilities
+          sudo apt-get install -y --no-install-recommends \
+            build-essential cmake pkg-config \
+            software-properties-common apt-transport-https wget
+          
+          # Get the Ubuntu codename (e.g., jammy)
+          . /etc/os-release
+          
+          # Add the Apache Arrow repository GPG key
+          wget -O - https://apache.jfrog.io/artifactory/api/gpg/key/public | sudo apt-key add -
+          
+          # Add the Apache Arrow repository source list
+          sudo add-apt-repository "deb https://apache.jfrog.io/artifactory/arrow/debian/${VERSION_CODENAME}/"
+          
+          # Update repositories again to fetch the new packages
+          sudo apt-get update
+          
+          # Install the specific Arrow and Parquet development libraries
           sudo apt-get install -y \
-            build-essential \
-            cmake \
-            pkg-config \
-            libboost-dev \
-            libgflags-dev \
-            libprotobuf-dev \
             libarrow-dev \
             libparquet-dev
           
