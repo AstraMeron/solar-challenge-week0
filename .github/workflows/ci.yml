@@ -18,35 +18,34 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          # Fix 1: Using a specific, modern version to find pre-built wheels
+          # Using a specific, modern version to help find pre-built wheels
           python-version: '3.11' 
 
       - name: Install PyArrow System Dependencies 🛠️
-        # Fixes 2 & 3: Adds the Arrow repository and installs necessary libraries
+        # This step manually adds the Arrow repository to resolve "Unable to locate package" errors.
         run: |
           sudo apt-get update
           
-          # Install basic tools and repository setup utilities
+          # 1. Install basic tools and repository setup utilities
           sudo apt-get install -y --no-install-recommends \
             build-essential cmake pkg-config \
             software-properties-common apt-transport-https wget
           
-          # Get the Ubuntu codename (e.g., jammy)
+          # 2. Get the Ubuntu codename
           . /etc/os-release
           
-          # Add the Apache Arrow repository GPG key
-          wget -O - https://apache.jfrog.io/artifactory/api/gpg/key/public | sudo apt-key add -
+          # Add the Apache Arrow GPG key
+          wget -qO - https://apache.jfrog.io/artifactory/api/gpg/key/public | sudo apt-key add -
           
-          # Add the Apache Arrow repository source list
-          sudo add-apt-repository "deb https://apache.jfrog.io/artifactory/arrow/debian/${VERSION_CODENAME}/"
+          # Manually write the repository line to the sources file
+          # This avoids the "Unable to handle repository shortcut" error
+          echo "deb https://apache.jfrog.io/artifactory/arrow/debian/${VERSION_CODENAME} main" | sudo tee /etc/apt/sources.list.d/apache-arrow.list
           
-          # Update repositories again to fetch the new packages
+          # 3. Update repositories again to fetch the new packages
           sudo apt-get update
           
-          # Install the specific Arrow and Parquet development libraries
-          sudo apt-get install -y \
-            libarrow-dev \
-            libparquet-dev
+          # 4. Install the specific Arrow and Parquet development libraries
+          sudo apt-get install -y libarrow-dev libparquet-dev
           
       - name: Install dependencies
         run: |
