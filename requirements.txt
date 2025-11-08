@@ -3,3 +3,4 @@ numpy
 matplotlib
 seaborn
 scipy # For Z-scores and ANOVA in later steps
+streamlit
