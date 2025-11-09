@@ -22,23 +22,27 @@ To reproduce the development environment locally, please follow these steps:
 
 Clone the Repository:
 
-bash 
-git clone [https://github.com/AstraMeron/solar-challenge-week0.git](https://github.com/AstraMeron/solar-challenge-week0.git) 
-cd solar-challenge-week0
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/AstraMeron/solar-challenge-week0.git
+    cd solar-challenge-week0
+    ```
 
 
-Create and Activate Virtual Environment (using venv):
 
-# Create
-python -m venv venv
-# Activate (Windows PowerShell)
-.\venv\Scripts\activate
+2.  **Create and Activate Virtual Environment (using venv):**
+    ```bash
+    # Create the environment
+    python -m venv venv
+    # Activate (Windows PowerShell)
+    .\venv\Scripts\activate
+    ```
 
 
-Install Dependencies:
-
-pip install -r requirements.txt
-
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 📊 Task 2: Data Profiling, Cleaning & EDA Approach
 
