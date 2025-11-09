@@ -22,7 +22,8 @@ To reproduce the development environment locally, please follow these steps:
 
 Clone the Repository:
 
-git clone [https://github.com/AstraMeron/solar-challenge-week0.git](https://github.com/AstraMeron/solar-challenge-week0.git)
+bash 
+git clone [https://github.com/AstraMeron/solar-challenge-week0.git](https://github.com/AstraMeron/solar-challenge-week0.git) 
 cd solar-challenge-week0
 
 
