@@ -1,56 +1,38 @@
-name: Continuous Integration
+name: Python CI/CD Pipeline
 
 on:
   push:
     branches:
       - main
-      - setup-task
+      - dashboard-dev
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          # Using a specific, modern version to help find pre-built wheels
-          python-version: '3.11' 
 
-      - name: Install PyArrow System Dependencies 🛠️
-        # This step manually adds the Arrow repository to resolve "Unable to locate package" errors.
-        run: |
-          sudo apt-get update
-          
-          # 1. Install basic tools and repository setup utilities
-          sudo apt-get install -y --no-install-recommends \
-            build-essential cmake pkg-config \
-            software-properties-common apt-transport-https wget
-          
-          # 2. Get the Ubuntu codename
-          . /etc/os-release
-          
-          # Add the Apache Arrow GPG key
-          wget -qO - https://apache.jfrog.io/artifactory/api/gpg/key/public | sudo apt-key add -
-          
-          # Manually write the repository line to the sources file
-          # This avoids the "Unable to handle repository shortcut" error
-          echo "deb https://apache.jfrog.io/artifactory/arrow/debian/${VERSION_CODENAME} main" | sudo tee /etc/apt/sources.list.d/apache-arrow.list
-          
-          # 3. Update repositories again to fetch the new packages
-          sudo apt-get update
-          
-          # 4. Install the specific Arrow and Parquet development libraries
-          sudo apt-get install -y libarrow-dev libparquet-dev
-          
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          
-      - name: Basic Check
-        run: python --version
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    # Ensures a stable environment for complex packages like pyarrow
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    # This step resolves the E: Malformed entry error by removing the corrupted 
+    # Apache Arrow list file and forcing an APT update.
+    - name: Fix Malformed Apache Arrow APT List
+      run: |
+        sudo rm -f /etc/apt/sources.list.d/apache-arrow.list
+        sudo apt-get update
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    # Add any testing steps here in the future
+    # - name: Run tests (optional)
+    #   run: python -m pytest
