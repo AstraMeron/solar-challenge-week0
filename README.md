@@ -1,69 +1,102 @@
-☀️ 10 Academy Solar Data Discovery: Week 0 Challenge - Interim Submission
+# ☀️ Solar Data Discovery: Cross-Country Solar Farm Analysis (Final Submission)
 
-Author: Meron Tilahun
+## Project Overview
 
-This repository is dedicated to the 10 Academy Week 0 challenge focused on understanding, exploring, and analyzing solar farm data from Benin, Sierra Leone, and Togo. This interim submission focuses on the completion of the foundational setup (Task 1) and the data cleaning/EDA approach (Task 2).
+This repository contains the analysis and interactive dashboard developed for **MoonLight Energy Solutions**.  
+The goal was to perform a **data-driven analysis** of solar irradiance data from three West African countries—**Benin, Sierra Leone, and Togo**—to identify high-potential regions for solar farm installation.
 
-⚙️ Task 1: Environment Setup & Repository Structure
+The final deliverable is an **interactive Streamlit dashboard**, successfully deployed to the cloud, that allows stakeholders to compare key solar metrics (**GHI, DNI, DHI**) across the three countries.
 
-The project established a professional, version-controlled environment to ensure reproducibility and collaboration.
+---
 
-A. File Structure
+## 🚀 Live Application & Deployment Success
 
-notebooks/: Contains the Jupyter notebooks used for data profiling, cleaning, and Exploratory Data Analysis (EDA) approach (Task 2).
+The interactive dashboard is fully deployed and accessible via the public **Streamlit Community Cloud** link.
 
-data/: (Ignored by Git) This folder holds the raw and cleaned CSV files.
+**Live Dashboard URL:**  
+🔗 [https://solar-challenge-dashboard.streamlit.app/](https://solar-challenge-dashboard.streamlit.app/)
 
-requirements.txt: Lists all project dependencies.
+### Deployment Instructions
 
-B. Local Setup Instructions
+The application is designed to be fully cloud-compatible, using Streamlit's **file uploader mechanism** instead of local file paths.
 
-To reproduce the development environment locally, please follow these steps:
+1. Click the **Live Dashboard URL** above.  
+2. In the **Configuration sidebar**, use the file uploader to provide the three required cleaned CSV files:
+   - `benin_clean.csv`
+   - `sierra_leone_clean.csv`
+   - `togo_clean.csv`  
+3. Once uploaded, the analysis dashboard will load automatically.
 
-Clone the Repository:
+---
+
+## 🛠️ Environment Setup & Local Run
+
+To run the analysis notebooks or the dashboard locally, follow these steps:
+
+### Prerequisites
+
+- Python 3.8+
+- Git
+
+---
 
 1.  **Clone the Repository:**
+
     ```bash
     git clone https://github.com/AstraMeron/solar-challenge-week0.git
     cd solar-challenge-week0
     ```
 
-
-
 2.  **Create and Activate Virtual Environment (using venv):**
+
     ```bash
     # Create the environment
     python -m venv venv
+
     # Activate (Windows PowerShell)
     .\venv\Scripts\activate
+
+    # Activate (Linux/macOS)
+    source venv/bin/activate
     ```
 
-
 3.  **Install Dependencies:**
+
     ```bash
     pip install -r requirements.txt
     ```
 
-📊 Task 2: Data Profiling, Cleaning & EDA Approach
+4.  **Run the Streamlit Dashboard Locally:**
 
-This section outlines the methodology applied to the Benin, Sierra Leone, and Togo datasets to ensure data quality and guide the cross-country comparison.
+    ```bash
+    streamlit run app/main.py
+    ```
 
-A. Data Cleaning and Preprocessing Approach
+    The app will open in your browser, and you can use the file uploader in the sidebar to load the data.
 
-Profiling: Initial analysis included generating summary statistics and a missing value report to assess data quality and completeness.
+---
 
-Outlier Handling: Outliers in key variables (GHI, DNI, DHI, WS) were managed using the Z-score method (threshold > 3).
+## 📝 Task Summaries (Completed Work)
 
-Missing Data: Isolated missing values were handled through median imputation on a per-column basis.
+1.  **Task 1: Git & Environment Setup**  
+✅ Completed:  
+Initialized repository, established a Python virtual environment, documented dependencies in `requirements.txt`, and implemented a basic CI pipeline using GitHub Actions (`.github/workflows/ci.yml`) to ensure code integrity.
 
-Time Series Indexing: Data was correctly indexed by time for accurate temporal analysis.
+2.  **Task 2 & 3: Data Analysis**  
+✅ Completed:  
+Comprehensive data cleaning (outlier and missing value handling), time series analysis, and correlation studies were performed across all three datasets.
 
-B. Exploratory Data Analysis (EDA) Outline
+**Strategic Comparison:**  
+The analysis concluded with a cross-country comparison (Task 3), using statistical summaries (mean, median, standard deviation) and visualizations (Boxplots, KPI Ranking) to determine the highest-potential sites.
 
-The EDA plan includes:
+3.  **Bonus Task: Interactive Dashboard & Deployment**  
+✅ Completed:  
+Developed an interactive dashboard using **Streamlit** (`app/main.py`) to visualize the cross-country comparisons.
 
-Temporal Analysis: Plotting key solar irradiance metrics over time.
+**Cloud-Ready:**  
+The application was refactored to use Streamlit’s multi-file uploader for data input, successfully eliminating dependencies on local file paths.
 
-Correlation Analysis: Using heatmaps to study the relationships between GHI, DNI, DHI, and environmental factors (e.g., Temperature).
+**Deployment Success:**  
+The dashboard was successfully deployed to the **Streamlit Community Cloud**.  
 
-Distribution Analysis: Using box plots and histograms to visualize the spread and concentration of solar resources.
+🔗 [https://solar-challenge-dashboard.streamlit.app/](https://solar-challenge-dashboard.streamlit.app/)
